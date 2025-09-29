@@ -1,0 +1,99 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  fullName    String    @map("full_name")
+  email       String    @unique
+  password    String
+  phoneNumber String?   @unique @map("phone_number")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  bookings    Booking[]
+
+  @@map("users")
+}
+
+model Movie {
+  id              Int        @id @default(autoincrement())
+  title           String
+  description     String     @db.Text
+  posterUrl       String     @map("poster_url")
+  durationMinutes Int        @map("duration_minutes")
+  releaseDate     DateTime   @map("release_date")
+  rating          String
+  genre           String
+  isShowing       Boolean    @default(true) @map("is_showing")
+  showtimes       Showtime[]
+
+  @@map("movies")
+}
+
+model Cinema {
+  id          Int          @id @default(autoincrement())
+  name        String
+  city        String
+  address     String       @db.Text
+  auditoriums Auditorium[]
+
+  @@map("cinemas")
+}
+
+model Auditorium {
+  id         Int        @id @default(autoincrement())
+  cinemaId   Int        @map("cinema_id")
+  cinema     Cinema     @relation(fields: [cinemaId], references: [id])
+  name       String
+  seatLayout Json
+  showtimes  Showtime[]
+
+  @@map("auditoriums")
+}
+
+model Showtime {
+  id           Int          @id @default(autoincrement())
+  movieId      Int          @map("movie_id")
+  movie        Movie        @relation(fields: [movieId], references: [id])
+  auditoriumId Int          @map("auditorium_id")
+  auditorium   Auditorium   @relation(fields: [auditoriumId], references: [id])
+  startTime    DateTime     @map("start_time")
+  endTime      DateTime     @map("end_time")
+  price        Float
+  bookings     Booking[]
+  bookedSeats  BookedSeat[]
+
+  @@map("showtimes")
+}
+
+model Booking {
+  id          Int          @id @default(autoincrement())
+  userId      Int          @map("user_id")
+  user        User         @relation(fields: [userId], references: [id])
+  showtimeId  Int          @map("showtime_id")
+  showtime    Showtime     @relation(fields: [showtimeId], references: [id])
+  totalPrice  Float        @map("total_price")
+  status      String // 'pending', 'paid', 'cancelled'
+  bookingCode String       @unique @map("booking_code")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  bookedSeats BookedSeat[]
+
+  @@map("bookings")
+}
+
+model BookedSeat {
+  id         Int      @id @default(autoincrement())
+  bookingId  Int      @map("booking_id")
+  booking    Booking  @relation(fields: [bookingId], references: [id])
+  showtimeId Int      @map("showtime_id")
+  showtime   Showtime @relation(fields: [showtimeId], references: [id])
+  seatRow    String   @map("seat_row")
+  seatNumber Int      @map("seat_number")
+
+  @@map("booked_seats")
+}
