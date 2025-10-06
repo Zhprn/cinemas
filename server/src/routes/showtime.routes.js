@@ -10,6 +10,7 @@ const router = express.Router();
 // Rute Publik
 // URL contoh: GET /api/showtimes?movieId=1&city=Padang&date=2025-09-29
 router.get('/', showtimeController.getAllShowtimes);
+router.get('/:id', showtimeController.getShowtimeById);
 
 // Aturan validasi
 const showtimeRules = [

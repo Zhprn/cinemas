@@ -36,5 +36,4 @@ router.put(
 
 router.delete('/:id', authMiddleware, movieController.deleteMovie);
 
-// --- BAGIAN PALING PENTING YANG MUNGKIN HILANG ---
 module.exports = router;

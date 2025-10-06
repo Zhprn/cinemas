@@ -91,8 +91,24 @@ const deleteShowtime = async (showtimeId) => {
   });
 };
 
+const findShowtimeById = async (showtimeId) => {
+  return await prisma.showtime.findUnique({
+    where: { id: showtimeId },
+    include: {
+      movie: true,
+      bookedSeats: true, // Ambil daftar kursi yang sudah dipesan
+      auditorium: {
+        include: {
+          cinema: true, // Ambil info bioskop
+        },
+      },
+    },
+  });
+};
+
 module.exports = {
   findAllShowtimes,
+  findShowtimeById,
   insertShowtime,
   deleteShowtime,
 };

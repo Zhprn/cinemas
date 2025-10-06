@@ -1,8 +1,11 @@
+const { PrismaClient } = require('@prisma/client');
+const { startOfDay, endOfDay } = require('date-fns');
 const movieService = require('../services/movie.service');
 const { validationResult } = require('express-validator');
-const fs = require('fs'); // Modul File System dari Node.js
+const fs = require('fs');
 const path = require('path');
 
+const prisma = new PrismaClient();
 /**
  * Mengambil semua film, dengan filter opsional berdasarkan status.
  * URL: GET /api/movies?status=now_showing
@@ -28,13 +31,11 @@ const getMovieById = async (req, res) => {
     if (isNaN(movieId)) {
       return res.status(400).json({ message: 'ID Film tidak valid.' });
     }
-
-    const movie = await movieService.findMovieById(movieId);
-    if (!movie) {
+    const movieData = await movieService.findMovieById(movieId);
+    if (!movieData) {
       return res.status(404).json({ message: 'Film tidak ditemukan.' });
     }
-
-    res.status(200).json(movie);
+    res.status(200).json(movieData);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Terjadi kesalahan pada server.' });
