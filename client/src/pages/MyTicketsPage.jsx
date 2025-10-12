@@ -86,9 +86,9 @@ function MyTicketsPage() {
           ) : (
             <div className="rounded-lg bg-white p-8 text-center text-gray-500 shadow-sm">
               <p>Anda belum memiliki tiket.</p>
-              <Link to="/" className="mt-4 inline-block rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white">
+              {/* <Link to="/" className="mt-4 inline-block rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white">
                 Cari Film
-              </Link>
+              </Link> */}
             </div>
           )}
         </div>

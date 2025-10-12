@@ -8,7 +8,6 @@ function AuthPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useContext(AuthContext);
 
   useEffect(() => {
     setIsRegister(location.pathname === '/register');
@@ -36,7 +35,7 @@ function AuthPage() {
         navigate('/login');
       } else {
         const response = await axios.post(url, formData);
-        login(response.data.token); 
+        // login(response.data.token); 
         localStorage.setItem('authToken', response.data.token);
         alert('Login berhasil!');
         navigate('/');

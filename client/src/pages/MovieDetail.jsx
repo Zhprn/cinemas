@@ -129,6 +129,8 @@ function MovieDetailPage() {
                 return acc;
               }, {});
 
+              
+
               return (
                 <div key={cinema.id} className="rounded-lg bg-white p-4 shadow-sm">
                   <h2 className="text-xl font-bold text-gray-800">{cinema.name}</h2>

@@ -110,7 +110,7 @@ function SeatSelectionPage() {
 
   return (
     <div className="container mx-auto p-4 md:p-8">
-      <h1 className="text-2xl font-bold">PILIH KURSI</h1>
+      <h1 className="text-2xl font-bold d-flex">PILIH KURSI</h1>
       <p className="text-gray-500">Pilih kursi yang akan kamu tempati selama pemutaran film</p>
       
       {/* Legenda */}
@@ -124,7 +124,7 @@ function SeatSelectionPage() {
       <div className="flex flex-col gap-2">{showtimeData && renderSeats()}</div>
 
       {/* Layar Bioskop */}
-      <div className="my-8 w-full rounded-md bg-blue-500 py-2 text-center font-bold text-white">
+      <div className="my-8 w-med rounded-md bg-blue-500 py-2 text-center font-bold text-white">
         Layar Bioskop Disini
       </div>
 

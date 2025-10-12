@@ -28,6 +28,8 @@ const createBooking = async (req, res) => {
   }
 };
 
+
+
 const getUserBookings = async (req, res) => {
   try {
     const userId = req.user.userId;
