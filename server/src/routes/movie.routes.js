@@ -4,13 +4,11 @@ const movieController = require('../controllers/movie.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
 const upload = require('../middlewares/upload.middleware');
 
-const router = express.Router(); // Pastikan Anda membuat router
+const router = express.Router();
 
-// Rute Publik (tidak perlu login)
 router.get('/', movieController.getAllMovies);
 router.get('/:id', movieController.getMovieById);
 
-// Aturan validasi untuk film baru
 const createMovieRules = [
   body('title').notEmpty().withMessage('Judul tidak boleh kosong'),
   body('description').notEmpty().withMessage('Deskripsi tidak boleh kosong'),
@@ -18,7 +16,6 @@ const createMovieRules = [
   body('durationMinutes').isInt({ gt: 0 }).withMessage('Durasi harus angka positif'),
 ];
 
-// Rute yang Membutuhkan Login
 router.post(
   '/',
   authMiddleware,
