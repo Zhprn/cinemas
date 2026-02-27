@@ -1,11 +1,8 @@
-// File: src/controllers/showtime.controller.js
-
 const showtimeService = require('../services/showtime.service');
 const { validationResult } = require('express-validator');
 
 const getAllShowtimes = async (req, res) => {
   try {
-    // Ambil semua filter dari query URL
     const filters = {
       movieId: req.query.movieId,
       city: req.query.city,
@@ -13,8 +10,6 @@ const getAllShowtimes = async (req, res) => {
     };
 
     const showtimes = await showtimeService.findAllShowtimes(filters);
-
-    // (Opsional) Kelompokkan hasil berdasarkan bioskop untuk frontend
     const groupedByCinema = showtimes.reduce((acc, showtime) => {
       const cinemaName = showtime.auditorium.cinema.name;
       if (!acc[cinemaName]) {
@@ -28,7 +23,7 @@ const getAllShowtimes = async (req, res) => {
         startTime: showtime.startTime,
         price: showtime.price,
         auditoriumName: showtime.auditorium.name,
-        movieTitle: showtime.movie.title, // Sertakan info film jika perlu
+        movieTitle: showtime.movie.title,
       });
       return acc;
     }, {});
@@ -53,8 +48,7 @@ const createShowtime = async (req, res) => {
       data: newShowtime,
     });
   } catch (error) {
-    // Tangkap error spesifik dari service (misal: jadwal tumpang tindih)
-    res.status(409).json({ message: error.message }); // 409 Conflict
+    res.status(409).json({ message: error.message });
   }
 };
 const getShowtimeById = async (req, res) => {
