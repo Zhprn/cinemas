@@ -1,5 +1,3 @@
-// File: src/controllers/booking.controller.js
-
 const bookingService = require('../services/booking.service');
 const { validationResult } = require('express-validator');
 
@@ -56,16 +54,8 @@ const getBookingById = async (req, res) => {
   }
 };
 
-// --- FUNGSI BARU DI SINI ---
-/**
- * Mengambil semua booking (Admin).
- */
 const getAllBookings = async (req, res) => {
   try {
-    // Di aplikasi nyata, tambahkan pengecekan role admin di sini
-    // if (req.user.role !== 'ADMIN') {
-    //   return res.status(403).json({ message: 'Akses ditolak.' });
-    // }
     const allBookings = await bookingService.findAllBookings();
     res.status(200).json(allBookings);
   } catch (error) {
@@ -78,5 +68,5 @@ module.exports = {
   createBooking,
   getUserBookings,
   getBookingById,
-  getAllBookings, // Ekspor fungsi baru
+  getAllBookings,
 };
